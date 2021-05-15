@@ -1,4 +1,4 @@
-package com.polozov.client;
+package ru.danilsibgatullin.client;
 
 import javax.swing.*;
 import java.awt.*;
