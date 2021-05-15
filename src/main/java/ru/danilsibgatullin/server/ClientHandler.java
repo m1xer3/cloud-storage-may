@@ -24,6 +24,7 @@ public class ClientHandler implements Runnable {
 				}
 				if ("download".equals(command)) {
 					// TODO: 13.05.2021 downloading
+					downloading(in.readUTF(),out);
 				}
 				if ("exit".equals(command)) {
 					out.writeUTF("DONE");
@@ -60,6 +61,27 @@ public class ClientHandler implements Runnable {
 			out.writeUTF("OK");
 		} catch (Exception e) {
 			out.writeUTF("WRONG");
+		}
+	}
+
+	private void downloading(String filename,DataOutputStream out) throws IOException {
+		try{
+			File file = new File("server/"+filename);
+			if (!file.exists()){
+				throw new FileNotFoundException();
+			} else {
+				out.writeUTF("OK"); //send comand if file found
+				out.writeLong(file.length());
+				FileInputStream fis = new FileInputStream(file);
+				int read = 0;
+				byte[] buffer = new byte[8 * 1024];
+				while ((read = fis.read(buffer)) != -1) {
+					out.write(buffer, 0, read);
+				}
+				out.flush();
+			}
+		} catch (FileNotFoundException fe){
+			System.err.println("File " + filename + " not found");
 		}
 	}
 
