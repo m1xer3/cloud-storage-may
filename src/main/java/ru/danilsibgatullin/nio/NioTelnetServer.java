@@ -1,4 +1,4 @@
-package com.polozov.nio;
+package ru.danilsibgatullin.nio;
 
 import java.io.File;
 import java.io.IOException;
